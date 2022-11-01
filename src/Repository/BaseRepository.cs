@@ -131,7 +131,7 @@ public abstract class BaseRepository<T> where T : BaseModel
     {
         return Builders<T>.Sort;
     }
-    internal List<SortDefinition<T>> GetSortDef(SortParam[] sorts)
+    internal static List<SortDefinition<T>> GetSortDef(SortParam[] sorts)
     {
         var sortDef = new List<SortDefinition<T>>();
         foreach (var sort in sorts)

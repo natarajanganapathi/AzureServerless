@@ -1,5 +1,5 @@
 namespace Incubation.AzConf.Common;
-public class UniqueRandom
+public static class UniqueRandom
 {
     public static IEnumerable<Int32> Get(int count, int max, int min = 0)
     {

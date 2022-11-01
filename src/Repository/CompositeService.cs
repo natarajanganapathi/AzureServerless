@@ -34,7 +34,7 @@ public class CompositeService
             .Eq("_id", ObjectId.Parse(participantId));
         var update = Builders<Participant>.Update
             .Set(nameof(Participant.EndTime), DateTime.Now);
-        var result = await _pRepo.UpdateAsync(filter, update);
+        await _pRepo.UpdateAsync(filter, update);
         return await _pRepo.GetByIdAsync(new Guid(participantId));
     }
     public async Task<Int32> CalculateScore(LeaderBoard participant)

@@ -61,7 +61,7 @@ public class QuestionBankFunction : FunctionBase
     public async Task<IActionResult> UploadQuestions(
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload-questions")] HttpRequest req, ILogger log)
     {
-        var file = req.Form.Files.FirstOrDefault();
+        var file = req.Form.Files[0];
         var data = new List<Dictionary<string, Object>>();
         if (file != null)
         {
@@ -74,7 +74,10 @@ public class QuestionBankFunction : FunctionBase
         var input = data.Select(x =>
         {
             QuestionType qt;
-            Enum.TryParse(x[nameof(QuestionBank.QuestionType)].ToString(), out qt);
+            if(!Enum.TryParse(x[nameof(QuestionBank.QuestionType)].ToString(), out qt))
+            {
+                qt = QuestionType.Multi;
+            }
             var optionKeys = x.Keys.Where(x => x.StartsWith("Options", true, System.Globalization.CultureInfo.CurrentCulture));
             var options = optionKeys.Select(options =>
             {
@@ -85,7 +88,7 @@ public class QuestionBankFunction : FunctionBase
             var answerKeys = x.Keys.Where(ans => ans.StartsWith("Answer", true, System.Globalization.CultureInfo.CurrentCulture));
             var answers = answerKeys.Select(ansKey =>
             {
-                var value = x[ansKey]?.ToString()?.Split("."); // ansKey.Split(".");
+                var value = x[ansKey]?.ToString()?.Split(".");
                 return Int32.Parse(value[1]);
             }).ToList();
             if (qt == QuestionType.Single && answers.Count > 1)
