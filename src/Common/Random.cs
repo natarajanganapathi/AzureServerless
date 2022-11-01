@@ -5,7 +5,7 @@ public class UniqueRandom
     {
         var random = new Random();
         Dictionary<int, bool> dict = new Dictionary<int, bool>();
-        while (dict.Count() < count)
+        while (dict.Count < count)
         {
             var val = random.Next(min, max);
             if (!dict.ContainsKey(val))

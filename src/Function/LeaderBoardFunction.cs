@@ -65,8 +65,7 @@ public class LeaderBoardFunction : FunctionBase
     public async Task ReceivedGoddies([HttpTrigger(AuthorizationLevel.Function, "patch", Route = "received-goodies")] HttpRequest req)
     {
         string id = req.Query["participantId"];
-        bool received = false;
-        Boolean.TryParse(req.Query["received"].ToString(), out received);
+        bool received = Convert.ToBoolean(req.Query["received"]);
         await _repo.ReceivedGoodies(id, received);
     }
 

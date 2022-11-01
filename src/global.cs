@@ -27,13 +27,8 @@ global using Microsoft.Azure.WebJobs.Host;
 global using DocumentFormat.OpenXml;
 global using DocumentFormat.OpenXml.Packaging;
 global using DocumentFormat.OpenXml.Spreadsheet;
-global using System.IO.Packaging;
 global using RestSharp;
 global using System.Text;
-global using Azure.Security.KeyVault.Secrets;
-global using Azure.Identity;
-global using Microsoft.Azure.WebJobs.Hosting;
-global using System.Collections.Specialized;
 
 global using Incubation.AzConf.Context;
 global using Incubation.AzConf.Repository;

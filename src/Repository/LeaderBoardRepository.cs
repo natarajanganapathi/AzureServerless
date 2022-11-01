@@ -25,7 +25,6 @@ public class LeaderBoardRepository : BaseRepository<LeaderBoard>
     {
         var filter = GetFilterDef().Eq(nameof(LeaderBoard.ParticipantId), ObjectId.Parse(participantId));
         var update = GetUpdateDef().Set(nameof(LeaderBoard.ReceivedGoodies), received);
-
-        var result = await UpdateAsync(filter, update);
+        await UpdateAsync(filter, update);
     }
 }

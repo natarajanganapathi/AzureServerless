@@ -3,7 +3,7 @@
 namespace Incubation.AzConf;
 public class Startup : FunctionsStartup
 {
-    private bool IsDevelopment =>
+    private static bool IsDevelopment =>
         string.Equals(Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT"), "Development", StringComparison.OrdinalIgnoreCase);
 
     public override void Configure(IFunctionsHostBuilder builder)
@@ -16,13 +16,12 @@ public class Startup : FunctionsStartup
         .AddScoped<LeaderBoardRepository>()
         .AddScoped<CompositeService>()
         ;
-        var context = builder.GetContext(); 
     }
 
     public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
     {
         FunctionsHostBuilderContext context = builder.GetContext();
-        var config = builder
+        builder
             .ConfigurationBuilder
             .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true)
             .AddEnvironmentVariables()

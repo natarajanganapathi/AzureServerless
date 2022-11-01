@@ -26,11 +26,11 @@ public class QuestionBankFunction : FunctionBase
                      .Filter
                      .Eq("Category", category);
         var questions = (await _repo.GetAsync(filter: filter)).ToList();
-        if (questions.Count() < 5)
+        if (questions.Count < 5)
         {
             throw new Exception($"There is no enough questions available in the catgory {category}");
         }
-        var uniqueRandom = UniqueRandom.Get(5, questions.Count());
+        var uniqueRandom = UniqueRandom.Get(5, questions.Count);
         var response = uniqueRandom.Select(x => new QuestionBank()
         {
             QuestionType = questions[x].QuestionType,
@@ -85,10 +85,10 @@ public class QuestionBankFunction : FunctionBase
             var answerKeys = x.Keys.Where(ans => ans.StartsWith("Answer", true, System.Globalization.CultureInfo.CurrentCulture));
             var answers = answerKeys.Select(ansKey =>
             {
-                var value = x[ansKey]?.ToString()?.Split(".");//ansKey.Split(".");
+                var value = x[ansKey]?.ToString()?.Split("."); // ansKey.Split(".");
                 return Int32.Parse(value[1]);
             }).ToList();
-            if (qt == QuestionType.Single && answers.Count() > 1)
+            if (qt == QuestionType.Single && answers.Count > 1)
             {
                 throw new Exception($"Question Type is single. But Multiple answers are selected");
             }

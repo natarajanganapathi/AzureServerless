@@ -16,7 +16,7 @@ public class CompositeService
         _pRepo = pRepo;
         _serializer = serializer;
     }
-    public async Task<Participant> ExamAttendByAsync(string participantId)
+    public async Task ExamAttendByAsync(string participantId)
     {
         var filter = Builders<Participant>
             .Filter
@@ -24,8 +24,7 @@ public class CompositeService
         var update = Builders<Participant>.Update
             .Set(nameof(Participant.StartTime), DateTime.Now)
             .Set(nameof(Participant.Attend), true);
-        var result = await _pRepo.UpdateAsync(filter, update);
-        return new Participant();
+        await _pRepo.UpdateAsync(filter, update);
     }
 
     public async Task<Participant> ExamCompletedByAsync(string participantId)
@@ -59,9 +58,11 @@ public class CompositeService
 
     public async Task ExportAllDataAsJson()
     {
+        _logger.LogInformation("Exporting all data as json");
         await ExportAllParticipantDataAsJson();
         await ExportAllQuestionBankDataAsJson();
         await ExportAllLeaderBoardDataAsJson();
+        _logger.LogInformation("Exporting all data as json completed");
     }
 
     private async Task ExportAllLeaderBoardDataAsJson()

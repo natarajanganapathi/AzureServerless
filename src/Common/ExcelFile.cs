@@ -20,9 +20,12 @@ public static class ExcelFile
         if (header)
         {
             var row = rows.FirstOrDefault();
-            var cells = row.Descendants<Cell>();
-            headers = GetObject(stringTable, cells, headers).Values.Select(x => x.ToString()).ToList();
-            rows = rows.Skip(1);
+            if (row != null)
+            {
+                var cells = row.Descendants<Cell>();
+                headers = GetObject(stringTable, cells, headers).Values.Select(x => x.ToString()).ToList();
+                rows = rows.Skip(1);
+            }
         }
         foreach (Row row in rows)
         {

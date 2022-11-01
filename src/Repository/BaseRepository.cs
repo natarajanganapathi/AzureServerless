@@ -16,7 +16,7 @@ public abstract class BaseRepository<T> where T : BaseModel
             return _collection;
         }
     }
-    public BaseRepository(DbContext context)
+    protected BaseRepository(DbContext context)
     {
         _context = context;
     }
@@ -33,7 +33,7 @@ public abstract class BaseRepository<T> where T : BaseModel
             .ToList()
             .ForEach(x => query = query.Project(x) as IFindFluent<T, T>);
         }
-        if (sorts != null && sorts.Count() > 0)
+        if (sorts != null && sorts.Any())
         {
             var sort = GetSortDef().Combine(sorts);
             query = query.Sort(sort);
@@ -112,7 +112,7 @@ public abstract class BaseRepository<T> where T : BaseModel
         return Collection.Find(filter);
     }
 
-    internal UpdateDefinition<T> GetUpdateDefinition(T data)
+    internal static UpdateDefinition<T> GetUpdateDefinition(T data)
     {
         var properties = typeof(T).GetProperties(BindingFlags.Public);
         var update = Builders<T>.Update;
@@ -127,7 +127,7 @@ public abstract class BaseRepository<T> where T : BaseModel
         return update.Combine();
     }
 
-    internal SortDefinitionBuilder<T> GetSortDef()
+    internal static SortDefinitionBuilder<T> GetSortDef()
     {
         return Builders<T>.Sort;
     }
@@ -136,18 +136,17 @@ public abstract class BaseRepository<T> where T : BaseModel
         var sortDef = new List<SortDefinition<T>>();
         foreach (var sort in sorts)
         {
-            var sortBuilder = Builders<T>.Sort;
             var sortDefinition = sort.Order == SortOrder.Descending ? GetSortDef().Descending(sort.Field) : GetSortDef().Ascending(sort.Field);
             sortDef.Add(sortDefinition);
         }
         return sortDef;
     }
-    internal FilterDefinitionBuilder<T> GetFilterDef()
+    internal static FilterDefinitionBuilder<T> GetFilterDef()
     {
         return Builders<T>.Filter;
     }
 
-    internal UpdateDefinitionBuilder<T> GetUpdateDef()
+    internal static UpdateDefinitionBuilder<T> GetUpdateDef()
     {
         return Builders<T>.Update;
     }

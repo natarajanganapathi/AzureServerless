@@ -6,7 +6,7 @@ public abstract class FunctionBase : IFunctionExceptionFilter, IFunctionInvocati
 
     // private readonly IHttpContextAccessor httpContextAccessor;
 
-    public FunctionBase(ILogger<FunctionBase> log)
+    protected FunctionBase(ILogger<FunctionBase> log)
     {
         _logger = log;
         // IHttpContextAccessor httpContextAccessor
