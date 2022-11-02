@@ -1,12 +1,16 @@
-# Reference
+# Azure Serverless
+This is sample project developed in Azure Function v4 with dotnet 6. This repo is integrated with [Cloud Sonarqube](https://sonarcloud.io/summary/new_code?id=natarajanganapathi_AzureServerless) to validate the code quality and security check. 
+
+
+## Reference
 
 1. [Azure Function Ref.](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-functions/create-first-function-cli-csharp.md)
 
-### Todo:
-=====
+
+## Todo:
 
 ### V.1.0
-=====
+
 1. Azure Key Vault - Done
 2. AppInsights Configuration 
 3. .Net 7 standards Standards
@@ -19,16 +23,16 @@
 10. Dependency Diagram documentation
 
 ### V.2.0
-=====
+
 1. Event Driven / Async Function call
 2. Durable Function
 
 ### Verificatoin:
-=============
+
 1.  ASK, Container APPs, Container Ins, Azure Fun, App Service
 
 ### PAAS
-====
+
 1. Azure App Service Deployment using GitHub Actions
 2. Send Email after complete the Test (Service Bus)
 
