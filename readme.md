@@ -1,35 +1,38 @@
+# Reference
 
-Todo:
+1. [Azure Function Ref.](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-functions/create-first-function-cli-csharp.md)
+
+### Todo:
 =====
 
-V.1.0
+### V.1.0
 =====
-1. Azure Key Vault
+1. Azure Key Vault - Done
 2. AppInsights Configuration 
-3. .Net 7 standards Standards (Gowtham, Saravanan)
-4. Azure Standards (Gowtham, Saravanan)
+3. .Net 7 standards Standards
+4. Azure Standards
 5. C# Lint Configuration 
-6. Sonar Lint configuration
-7. Sonarqube Integration (Quality, Security)
-8. GitHub Actions (Trunk based) 
+6. Sonar Lint configuration 
+7. Sonarqube Integration (Quality, Security) - Done
+8. GitHub Actions (Trunk based) - Done
 9. Sequence Diagram Documentation
 10. Dependency Diagram documentation
 
-V.2.0
+### V.2.0
 =====
 1. Event Driven / Async Function call
 2. Durable Function
 
-Verificatoin:
+### Verificatoin:
 =============
 1.  ASK, Container APPs, Container Ins, Azure Fun, App Service
 
-PAAS
+### PAAS
 ====
 1. Azure App Service Deployment using GitHub Actions
 2. Send Email after complete the Test (Service Bus)
 
-## local.settings.json
+### local.settings.json
 
 ```json
 {

@@ -1,4 +1,4 @@
-name: .NET
+name: Dotnet 6  SAST & Build
 
 on:
   push:
