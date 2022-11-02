@@ -8,7 +8,7 @@ on:
 
 jobs:
   sast:
-    name: Satic Application Security Testing
+    name: Static Application Security Testing
     runs-on: windows-latest
     steps:
       - name: Set up JDK 11
