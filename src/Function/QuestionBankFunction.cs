@@ -22,9 +22,7 @@ public class QuestionBankFunction : FunctionBase
         string category = req.Query["category"];
         string participantId = req.Query["participantId"];
         await _cs.ExamAttendByAsync(participantId);
-        var filter = Builders<QuestionBank>
-                     .Filter
-                     .Eq("Category", category);
+        var filter = _repo.GetFilterDef().Eq("Category", category);
         var questions = (await _repo.GetAsync(filter: filter)).ToList();
         if (questions.Count < 5)
         {

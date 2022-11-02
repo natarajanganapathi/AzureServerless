@@ -21,7 +21,7 @@ public abstract class BaseRepository<T> where T : BaseModel
         _context = context;
     }
 
-    public async Task<IEnumerable<T>> GetAsync(string[] projection = null, FilterDefinition<T> filter = null, List<SortDefinition<T>> sorts = null, PageContext pc = null)
+    public async Task<IEnumerable<T>> GetAsync(string[] projection = null, FilterDefinition<T> filter = null, SortDefinition<T>[] sorts = null, PageContext pc = null)
     {
         pc = pc != null ? pc : new PageContext();
         filter = filter != null ? filter : GetFilterDef().Empty;
@@ -29,7 +29,7 @@ public abstract class BaseRepository<T> where T : BaseModel
 
         if (projection != null && projection.Length > 0)
         {
-            projection.Select(x => Builders<T>.Projection.Include(x))
+            projection.Select(x => GetProjectionDef().Include(x))
             .ToList()
             .ForEach(x => query = query.Project(x) as IFindFluent<T, T>);
         }
@@ -92,7 +92,7 @@ public abstract class BaseRepository<T> where T : BaseModel
     public async Task<ReplaceOneResult> ReplaceAsync(T data)
     {
         return await Collection
-                     .ReplaceOneAsync(Builders<T>.Filter.Eq("_id", data.Id), data);
+                     .ReplaceOneAsync(GetFilterDef().Eq("_id", data.Id), data);
     }
     public async Task DeleteAsync(Guid id)
     {
@@ -102,17 +102,17 @@ public abstract class BaseRepository<T> where T : BaseModel
 
     public async Task<long> GetCountAsync(FilterDefinition<T> filter = null)
     {
-        filter = filter != null ? filter : Builders<T>.Filter.Empty;
+        filter = filter != null ? filter : GetFilterDef().Empty;
         var result = Collection.Find(filter);
         return await result.CountDocumentsAsync();
     }
 
-    internal IFindFluent<T, T> GetByFilter(FilterDefinition<T> filter)
+    public IFindFluent<T, T> GetByFilter(FilterDefinition<T> filter)
     {
         return Collection.Find(filter);
     }
 
-    internal static UpdateDefinition<T> GetUpdateDefinition(T data)
+    public static UpdateDefinition<T> GetUpdateDefinition(T data)
     {
         var properties = typeof(T).GetProperties(BindingFlags.Public);
         var update = Builders<T>.Update;
@@ -127,28 +127,33 @@ public abstract class BaseRepository<T> where T : BaseModel
         return update.Combine();
     }
 
-    internal static SortDefinitionBuilder<T> GetSortDef()
+    public SortDefinitionBuilder<T> GetSortDef()
     {
         return Builders<T>.Sort;
     }
-    internal static List<SortDefinition<T>> GetSortDef(SortParam[] sorts)
+    public SortDefinition<T>[] GetSortDef(SortParam[] sorts)
     {
-        var sortDef = new List<SortDefinition<T>>();
+        var sortDef = new SortDefinition<T>[sorts.Length];
         foreach (var sort in sorts)
         {
             var sortDefinition = sort.Order == SortOrder.Descending ? GetSortDef().Descending(sort.Field) : GetSortDef().Ascending(sort.Field);
-            sortDef.Add(sortDefinition);
+            sortDef.Append(sortDefinition);
         }
         return sortDef;
     }
-    internal static FilterDefinitionBuilder<T> GetFilterDef()
+    public FilterDefinitionBuilder<T> GetFilterDef()
     {
         return Builders<T>.Filter;
     }
 
-    internal static UpdateDefinitionBuilder<T> GetUpdateDef()
+    public UpdateDefinitionBuilder<T> GetUpdateDef()
     {
         return Builders<T>.Update;
+    }
+
+    public ProjectionDefinitionBuilder<T> GetProjectionDef()
+    {
+        return Builders<T>.Projection;
     }
 }
 
