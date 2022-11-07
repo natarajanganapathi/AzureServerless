@@ -6,6 +6,10 @@ This is sample project developed in Azure Function v4 with dotnet 6. This repo i
 
 ![Contest application workflow](./docs/Workflow.JPG)
 
+## App Configuration
+
+![Azure App Configuration](./docs/AppConfiguration.JPG)
+
 ## Reference
 
 1. [Azure Function Ref.](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-functions/create-first-function-cli-csharp.md)
