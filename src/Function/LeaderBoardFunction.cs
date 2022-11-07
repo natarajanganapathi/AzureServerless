@@ -16,9 +16,9 @@ public class LeaderBoardFunction : FunctionBase
     [FunctionName(nameof(GetLeaderBoardDetailsByParticipantId))]
     [OpenApiOperation(operationId: "Run", tags: new[] { "LeaderBoard" })]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiParameter(name: "participantId", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "Participent Id")]
+    [OpenApiParameter(name: "participantId", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "Participant ID")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(LeaderBoard), Description = "The OK response")]
-    public async Task<IActionResult> GetLeaderBoardDetailsByParticipantId([HttpTrigger(AuthorizationLevel.Function, "get", Route = "get-leader-board-by-pariticpant-id")] HttpRequest req)
+    public async Task<IActionResult> GetLeaderBoardDetailsByParticipantId([HttpTrigger(AuthorizationLevel.Function, "get", Route = "get-leader-board-by-participant-id")] HttpRequest req)
     {
         string id = req.Query["participantId"];
         var participant = await _repo.GetLeaderBoardDetailsByParticipantId(id);
