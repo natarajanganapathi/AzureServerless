@@ -25,6 +25,19 @@ public class Startup : FunctionsStartup
             .ConfigurationBuilder
             .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true)
             .AddEnvironmentVariables()
+            // .AddAzureAppConfiguration(options =>
+            // {
+            //     options.Connect(Environment.GetEnvironmentVariable("AppConfigurationConnectionString"))
+            //         .ConfigureRefresh(refreshOptions =>
+            //         {
+            //             refreshOptions.Register("Incubation:AzConf:Settings:RefreshAll", refreshAll: true)
+            //                 .SetCacheExpiration(TimeSpan.FromSeconds(30));
+            //         })
+            //         .UseFeatureFlags(featureFlagOptions =>
+            //         {
+            //             featureFlagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(30);
+            //         });
+            // })
             // .AddAzureKeyVault(new Uri(KeyVaultEndpointUrl), new DefaultAzureCredential())
             .Build();
     }
